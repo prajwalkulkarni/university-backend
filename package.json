@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "build":"tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev ./index.ts"
+    "start": "node out/index.js"
   },
   "author": "Prajwal Kulkarni",
   "license": "ISC",
