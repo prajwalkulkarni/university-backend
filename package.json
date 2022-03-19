@@ -8,10 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node out/index.js"
   },
-  "engines" : { 
-    "npm" : ">=6.0.0",
-    "node" : ">=16.0.0"
-  },
   "author": "Prajwal Kulkarni",
   "license": "ISC",
   "devDependencies": {
