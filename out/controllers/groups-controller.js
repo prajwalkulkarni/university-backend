@@ -184,8 +184,8 @@ const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         postId = yield newPost.save();
     }
     catch (error) {
-        // console.log(error)
-        next(new HttpError('Error creating new post', 500));
+        console.log(error);
+        next(new HttpError(error, 500));
     }
     res.status(201).json({ postId: postId.toObject({ getters: true }).id, link: (_b = (_a = postId.toObject({ getters: true }).storage) === null || _a === void 0 ? void 0 : _a.location) !== null && _b !== void 0 ? _b : null });
 });
