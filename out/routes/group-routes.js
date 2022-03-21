@@ -11,7 +11,7 @@ const multer = require('multer');
 const path = require('path');
 const checkAuth = require('../utils/auth');
 router.use(checkAuth);
-const uploadsDir = path.resolve(__dirname, 'uploads');
+const uploadsDir = path.resolve(__dirname, '../uploads');
 var storage = multer.diskStorage({
     destination: uploadsDir,
     filename: function (req, file, cb) {

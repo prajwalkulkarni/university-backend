@@ -151,7 +151,7 @@ const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         // const Attachment:any = createModel()
         const fileBuffer = req.file;
         if (fileBuffer !== undefined) {
-            path = `uploads/${fileBuffer.originalname}`;
+            path = `out/uploads/${fileBuffer.originalname}`;
             const stream = fs.createReadStream(path);
             const params = {
                 Bucket: 'bucket-filestorage',

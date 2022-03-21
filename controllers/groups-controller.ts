@@ -201,7 +201,7 @@ const createPost = async(req:Request,res:Response,next:Function)=>{
 
         
         if (fileBuffer !==undefined) {
-            path = `uploads/${fileBuffer.originalname}`
+            path = `out/uploads/${fileBuffer.originalname}`
             const stream = fs.createReadStream(path)
             
             
