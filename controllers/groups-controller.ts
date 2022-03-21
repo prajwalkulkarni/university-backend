@@ -242,8 +242,8 @@ const createPost = async(req:Request,res:Response,next:Function)=>{
     }
 
     catch(error){
-        // console.log(error)
-        next(new HttpError('Error creating new post',500))
+        console.log(error)
+        next(new HttpError(error,500))
     }
     
 
