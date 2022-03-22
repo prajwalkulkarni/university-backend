@@ -12,7 +12,6 @@ const getQuickNote = async(req:Request,res:Response,next:Function)=>{
     try{
         const user = await User.findById({_id:userId})
         const quicknotes = user.quicknotes
-       
         
         res.status(200).json({quicknotes})
     }
@@ -20,7 +19,6 @@ const getQuickNote = async(req:Request,res:Response,next:Function)=>{
         const error = new HttpError('Unable to fetch quicknotes',500)
         next(error)
     }
-   
     
 }
 
@@ -33,11 +31,18 @@ const addQuickNote = async(req:Request,res:Response,next:Function)=>{
     
     try {
 
-        await User.findByIdAndUpdate({ _id: userId }, { "$push": { "quicknotes": quicknote }})
+        User.findByIdAndUpdate({ _id: userId }, { "$push": { "quicknotes": quicknote }},function(err:Error,data:any){
+            if(err){
+                throw new Error('Error')
+            }
+            else{
+                res.status(201).json({ id })
+            }
 
-        res.status(201).json({ id })
+        })
     }
     catch (err) {
+        
         const error = new HttpError(err, 500)
         next(error)
     }
@@ -50,20 +55,20 @@ const deleteQuickNote = async(req:Request,res:Response,next:Function)=>{
     
     try {
 
-        console.log(quickNoteId)
         const quicknotesLength = await User.findOne({_id:userId})
         const result = await User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": {id:quickNoteId} }})
-
-        // console.log(quicknotesLength.quicknotes,result.quicknotes)
-        if(quicknotesLength.quicknotes.length===result.quicknotes.length){
-            // throw new Error('Invalid id supplied')
-            return next(new HttpError('Invalid id supplied',500))
-        }
+        
+        // if(quicknotesLength.quicknotes.length===result.quicknotes.length){
+        //     // throw new Error('Invalid id supplied')
+        //     return next(new HttpError('Invalid id supplied',500))
+        // }
+        console.log("Delete action success")
         
         res.status(200).json({ message:"Quick note deleted successfully" })
     }
     catch (err) {
-        // console.log(err)
+        console.log("Error is caming")
+
         const error = new HttpError(err, 500)
         return next(error)
     }

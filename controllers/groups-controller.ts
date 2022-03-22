@@ -1,6 +1,6 @@
 import {Request,Response} from 'express'
 import s3 from '../utils/sdk'
-import { GroupState, PostState } from "../utils/types";
+import { PostState } from "../utils/types";
 import { ObjectId } from "mongodb";
 import { validationResult } from 'express-validator';
 

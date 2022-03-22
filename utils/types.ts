@@ -4,7 +4,7 @@ export type User = {
     fullName:string,
     groups:GroupState[],
     forks:PostState[],
-    todos:Todo[]
+    todos:Quicknote[]
 }
 
 export type GroupState = {
@@ -29,10 +29,10 @@ export type PostState = {
     postTitle:string
 }
 
-export type Todo = {
-    todoId:string,
-    todoTitle:string,
-    todoDescription:string
+export type Quicknote = {
+    id:string,
+    title:string,
+    description:string
 }
 
 export type HttpErrorType = {
