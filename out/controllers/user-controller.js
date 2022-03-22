@@ -29,8 +29,14 @@ const addQuickNote = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const id = uuidv4();
     const quicknote = Object.assign(Object.assign({}, req.body), { id });
     try {
-        yield User.findByIdAndUpdate({ _id: userId }, { "$push": { "quicknotes": quicknote } });
-        res.status(201).json({ id });
+        User.findByIdAndUpdate({ _id: userId }, { "$push": { "quicknotes": quicknote } }, function (err, data) {
+            if (err) {
+                throw new Error('Error');
+            }
+            else {
+                res.status(201).json({ id });
+            }
+        });
     }
     catch (err) {
         const error = new HttpError(err, 500);
@@ -41,18 +47,17 @@ const deleteQuickNote = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     const userId = req.params.userId;
     const quickNoteId = req.params.qid;
     try {
-        console.log(quickNoteId);
         const quicknotesLength = yield User.findOne({ _id: userId });
         const result = yield User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": { id: quickNoteId } } });
-        // console.log(quicknotesLength.quicknotes,result.quicknotes)
-        if (quicknotesLength.quicknotes.length === result.quicknotes.length) {
-            // throw new Error('Invalid id supplied')
-            return next(new HttpError('Invalid id supplied', 500));
-        }
+        // if(quicknotesLength.quicknotes.length===result.quicknotes.length){
+        //     // throw new Error('Invalid id supplied')
+        //     return next(new HttpError('Invalid id supplied',500))
+        // }
+        console.log("Delete action success");
         res.status(200).json({ message: "Quick note deleted successfully" });
     }
     catch (err) {
-        // console.log(err)
+        console.log("Error is caming");
         const error = new HttpError(err, 500);
         return next(error);
     }

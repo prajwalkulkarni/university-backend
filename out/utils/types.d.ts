@@ -4,7 +4,7 @@ export declare type User = {
     fullName: string;
     groups: GroupState[];
     forks: PostState[];
-    todos: Todo[];
+    todos: Quicknote[];
 };
 export declare type GroupState = {
     id: string;
@@ -25,10 +25,10 @@ export declare type PostState = {
     } | null;
     postTitle: string;
 };
-export declare type Todo = {
-    todoId: string;
-    todoTitle: string;
-    todoDescription: string;
+export declare type Quicknote = {
+    id: string;
+    title: string;
+    description: string;
 };
 export declare type HttpErrorType = {
     errorCode: number;
