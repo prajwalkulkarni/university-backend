@@ -16,6 +16,10 @@ const getQuickNote = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const userId = req.params.userId;
     try {
         const user = yield User.findById({ _id: userId });
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
         const quicknotes = user.quicknotes;
         res.status(200).json({ quicknotes });
     }
@@ -47,12 +51,12 @@ const deleteQuickNote = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     const userId = req.params.userId;
     const quickNoteId = req.params.qid;
     try {
-        const quicknotesLength = yield User.findOne({ _id: userId });
-        const result = yield User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": { id: quickNoteId } } });
-        // if(quicknotesLength.quicknotes.length===result.quicknotes.length){
-        //     // throw new Error('Invalid id supplied')
-        //     return next(new HttpError('Invalid id supplied',500))
-        // }
+        const user = yield User.findById(userId);
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
+        yield User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": { id: quickNoteId } } });
         console.log("Delete action success");
         res.status(200).json({ message: "Quick note deleted successfully" });
     }

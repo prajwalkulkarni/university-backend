@@ -1,6 +1,6 @@
 const groupRouteController  = require('../controllers/groups-controller')
 
-import express,{Request} from 'express'
+import express,{request, Request} from 'express'
 import {body} from 'express-validator'
 
 const router = express.Router()
@@ -10,6 +10,7 @@ const path = require('path')
 const checkAuth = require('../utils/auth')
 
 router.use(checkAuth)
+
 const uploadsDir = path.resolve(__dirname,'../uploads')
 var storage = multer.diskStorage({
     destination: uploadsDir,

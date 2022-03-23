@@ -1,5 +1,4 @@
 import {Request,response,Response} from 'express'
-// import { RequestCustom } from './utils/CustomRequest';
 import { HttpErrorType } from './utils/types';
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -47,7 +46,6 @@ app.use((error:HttpErrorType,req:Request,res:Response,next:Function)=>{
         return next(error)
     }
 
-    console.log("error middleware invoked")
     res.status(error.errorCode||500)
     res.json({message:error.message||'Unknown error occured'})
 })

@@ -70,6 +70,11 @@ const getAllGroups = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     const userId = req.params.userId;
     let userGroups;
     try {
+        const user = yield User.findById(userId);
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
         userGroups = yield User.findById(userId).populate('groups');
         if (!userGroups) {
             throw new Error('catch it');
@@ -119,6 +124,10 @@ const leaveGroup = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     const { userId, groupId: id } = req.params;
     try {
         const user = yield User.findById(userId);
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
         const group = yield Group.findById(id);
         const session = yield mongoose.startSession();
         session.startTransaction();
@@ -196,6 +205,10 @@ const getGroupPosts = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     try {
         groupPosts = yield Post.find({ groupId });
         user = yield User.findById({ _id: userId });
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
         // console.log(user)
         const forks = user.forks.map((fork) => fork.toString());
         groupPosts = groupPosts.map((groupPost) => groupPost.toObject({ getters: true }));
@@ -239,13 +252,18 @@ const createFork = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 const getForkPosts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { groupId, userId } = req.params;
     try {
+        const user = yield User.findById(userId);
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
         const userForkPosts = yield User.findById(userId).populate('forks');
         const forkPostsCollection = userForkPosts.forks.filter((post) => post.groupId.toString() === groupId);
         if (forkPostsCollection.length > 0) {
             res.status(200).json({ forkposts: forkPostsCollection.map((forkPost) => forkPost.toObject({ getters: true })) });
         }
         else {
-            res.status(200).json({ forkPosts: [] });
+            res.status(200).json({ forkposts: [] });
         }
     }
     catch (err) {
@@ -254,12 +272,16 @@ const getForkPosts = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 const unforkPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Reaching unfork post");
     const { userId } = req.params;
     const { postId } = req.body;
     // console.log(userId,postId)
     try {
-        const user = yield User.findByIdAndUpdate(userId, { "$pull": { "forks": postId } });
+        const user = yield User.findById(userId);
+        const email = user.email;
+        if (req.userDetails.email !== email) {
+            throw new Error('User unauthorized to perform this action.');
+        }
+        yield User.findByIdAndUpdate(userId, { "$pull": { "forks": postId } });
         return res.status(204).json({ message: 'Post unforked successfully' });
     }
     catch (err) {

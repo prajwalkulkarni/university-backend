@@ -3,6 +3,7 @@ import s3 from '../utils/sdk'
 import { PostState } from "../utils/types";
 import { ObjectId } from "mongodb";
 import { validationResult } from 'express-validator';
+import { RequestCustom } from '../utils/CustomRequest';
 
 const { Readable } = require('stream');
 const mongoose = require('mongoose')
@@ -77,10 +78,17 @@ const createGroup = async(req:Request,res:Response,next:Function)=>{
 
 }
 
-const getAllGroups = async(req:Request,res:Response,next:Function)=>{
+const getAllGroups = async(req:RequestCustom,res:Response,next:Function)=>{
     const userId = req.params.userId
     let userGroups
     try{
+        const user = await User.findById(userId)
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
+
+        }
         userGroups = await User.findById(userId).populate('groups')
         
         if(!userGroups){
@@ -147,13 +155,21 @@ const joinGroup = async(req:Request,res:Response,next:Function)=>{
 }
 
 
-const leaveGroup = async(req:Request,res:Response,next:Function) => {
+const leaveGroup = async(req:RequestCustom,res:Response,next:Function) => {
 
     
     const {userId,groupId:id} = req.params
   
+    
     try{
+        
         const user = await User.findById(userId)
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
+
+        }
         const group = await Group.findById(id)
 
         const session = await mongoose.startSession()    
@@ -251,7 +267,7 @@ const createPost = async(req:Request,res:Response,next:Function)=>{
 
 }
 
-const getGroupPosts = async(req:Request,res:Response,next:Function)=>{
+const getGroupPosts = async(req:RequestCustom,res:Response,next:Function)=>{
 
     const {groupId,userId} = req.params
     let groupPosts
@@ -263,6 +279,14 @@ const getGroupPosts = async(req:Request,res:Response,next:Function)=>{
 
         groupPosts = await Post.find({ groupId })
         user = await User.findById({ _id: userId })
+
+
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
+
+        }
         // console.log(user)
         const forks = user.forks.map((fork: any) => fork.toString())
 
@@ -327,11 +351,20 @@ const createFork = async(req:Request,res:Response,next:Function)=>{
 
 }
 
-const getForkPosts = async(req:Request,res:Response,next:Function)=>{
+const getForkPosts = async(req:RequestCustom,res:Response,next:Function)=>{
     const {groupId,userId} = req.params
 
     
     try{
+
+        const user = await User.findById(userId)
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
+
+        }
+        
         const userForkPosts = await User.findById(userId).populate('forks')
         
 
@@ -341,7 +374,7 @@ const getForkPosts = async(req:Request,res:Response,next:Function)=>{
             res.status(200).json({forkposts:forkPostsCollection.map((forkPost:any)=>forkPost.toObject({getters:true}))})
         }
         else{
-            res.status(200).json({forkPosts:[]})
+            res.status(200).json({forkposts:[]})
         }
     }
     catch(err){
@@ -351,17 +384,23 @@ const getForkPosts = async(req:Request,res:Response,next:Function)=>{
     
 }
 
-const unforkPost = async(req:Request,res:Response,next:Function) => {
+const unforkPost = async(req:RequestCustom,res:Response,next:Function) => {
 
-    console.log("Reaching unfork post")
     const {userId} = req.params
     const {postId} = req.body
 
     // console.log(userId,postId)
 
     try{
+        
+        const user = await User.findById(userId)
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
 
-        const user = await User.findByIdAndUpdate(userId,{"$pull":{"forks":postId}})
+        }
+        await User.findByIdAndUpdate(userId,{"$pull":{"forks":postId}})
 
         return res.status(204).json({message:'Post unforked successfully'})
     }catch(err:unknown){

@@ -5,12 +5,19 @@ const HttpError = require('../models/http-error')
 const {v4:uuidv4} = require('uuid')
 const User = require('../models/user')
 
-const getQuickNote = async(req:Request,res:Response,next:Function)=>{
+const getQuickNote = async(req:RequestCustom,res:Response,next:Function)=>{
 
     const userId = req.params.userId
     
     try{
         const user = await User.findById({_id:userId})
+
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
+
+        }
         const quicknotes = user.quicknotes
         
         res.status(200).json({quicknotes})
@@ -49,19 +56,22 @@ const addQuickNote = async(req:Request,res:Response,next:Function)=>{
 
 }
 
-const deleteQuickNote = async(req:Request,res:Response,next:Function)=>{
+const deleteQuickNote = async(req:RequestCustom,res:Response,next:Function)=>{
     const userId = req.params.userId
     const quickNoteId = req.params.qid
     
     try {
+        const user = await User.findById(userId)
+        const email = user.email
+       
+        if(req.userDetails.email!==email){
+            throw new Error('User unauthorized to perform this action.')
 
-        const quicknotesLength = await User.findOne({_id:userId})
-        const result = await User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": {id:quickNoteId} }})
+        }
+
+        await User.findByIdAndUpdate({ _id: userId }, { "$pull": { "quicknotes": {id:quickNoteId} }})
         
-        // if(quicknotesLength.quicknotes.length===result.quicknotes.length){
-        //     // throw new Error('Invalid id supplied')
-        //     return next(new HttpError('Invalid id supplied',500))
-        // }
+       
         console.log("Delete action success")
         
         res.status(200).json({ message:"Quick note deleted successfully" })
