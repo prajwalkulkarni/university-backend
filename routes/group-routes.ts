@@ -46,15 +46,4 @@ router.delete('/:userId/unfork',groupRouteController.unforkPost)
 router.delete('/:userId/:groupId',groupRouteController.leaveGroup)
 
 
-//POST ROUTES
-
-
-
-
-//FORK POST ROUTES
-
-
-
-
-
 module.exports = router
