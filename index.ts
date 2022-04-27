@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended:true}))
 
 app.use((req:Request,res:Response,next:Function)=>{
 
-    res.setHeader('Access-Control-Allow-Origin','https://www.eduwall.in, https://backend.eduwall.in')
+    res.setHeader('Access-Control-Allow-Origin','*')
     res.setHeader('Access-Control-Allow-Headers','Origin, X-Request-With, Content-Type, Accept, Authorization')
     res.setHeader('Access-Control-Allow-Methods','GET,POST,PATCH,PUT,DELETE')
 
