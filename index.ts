@@ -30,15 +30,6 @@ app.use((req:Request,res:Response,next:Function)=>{
     next()
 })
 
-app.use((error:HttpErrorType,req:Request,res:Response,next:Function)=>{
-    if(res.headersSent){
-        return next(error)
-    }
-
-    res.status(error.errorCode||500)
-    res.json({message:error.message||'Unknown error occured'})
-})
-
 
 app.use('/api/users',userRouter)
 app.use('/api/groups',groupRouter)
@@ -49,7 +40,14 @@ app.use((req:Request,res:Response,next:Function)=>{
     throw error
 })
 
+app.use((error:HttpErrorType,req:Request,res:Response,next:Function)=>{
+    if(res.headersSent){
+        return next(error)
+    }
 
+    res.status(error.errorCode||500)
+    res.json({message:error.message||'Unknown error occured'})
+})
 
 mongoose
 .connect(`mongodb+srv://${process.env.DB_USR}:${process.env.DB_PASS}@cluster0.gmn6g.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
