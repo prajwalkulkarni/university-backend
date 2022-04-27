@@ -34,6 +34,4 @@ router.post('/:groupId/fork', [
 router.post('/join/:userId/:groupLink', groupRouteController.joinGroup);
 router.delete('/:userId/unfork', groupRouteController.unforkPost);
 router.delete('/:userId/:groupId', groupRouteController.leaveGroup);
-//POST ROUTES
-//FORK POST ROUTES
 module.exports = router;
