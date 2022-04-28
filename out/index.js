@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-const cors = require('cors');
 const HttpError = require('./models/http-error');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -14,7 +13,8 @@ const PORT_NO = 1337;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://www.eduwall.in');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Origin','http://localhost:3000')
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accept, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE');
     next();
