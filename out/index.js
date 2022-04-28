@@ -13,7 +13,7 @@ const PORT_NO = 1337;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://eduwall.in');
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.eduwall.in');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accept, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,PUT,DELETE');
     next();
