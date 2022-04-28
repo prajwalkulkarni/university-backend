@@ -88,7 +88,7 @@ const createOrLoginUser = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         }
     }
     catch (err) {
-        console.log("Error block of create or sign in user");
+        console.log(err);
         const error = new HttpError('Error signing in', 500);
         return next(error);
     }
