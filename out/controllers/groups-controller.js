@@ -159,7 +159,7 @@ const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         // const Attachment:any = createModel()
         const fileBuffer = req.file;
-        if (fileBuffer !== undefined) {
+        if (fileBuffer) {
             path = `uploads/${fileBuffer.originalname}`;
             const stream = fs.createReadStream(path);
             const params = {

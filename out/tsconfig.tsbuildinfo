@@ -2397,7 +2397,7 @@
         "affectsGlobalScope": false
       },
       "../controllers/groups-controller.ts": {
-        "version": "eafbfb551eb51a4009674ad5ff892764e8d771e79f2027e980a30c5844759033",
+        "version": "84a1e078d9e6420609a0e2e3dab500d762697b4f114a10a5ba6e1ec65857f0bf",
         "signature": "79a8c7e0a55258c150c6391ed3a42f5dba57ded1add3c8f6aecddf1337856c8f",
         "affectsGlobalScope": false
       },
