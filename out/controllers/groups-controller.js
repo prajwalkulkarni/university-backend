@@ -29,7 +29,7 @@ const mongoDBShortId = ShortId({
 });
 //GROUPS
 const createGroup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const errors = (0, express_validator_1.validationResult)(req);
+    const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
         return next(new HttpError(errors.array()[0].msg, 400));
     }
@@ -146,7 +146,7 @@ const leaveGroup = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 //POSTS
 const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    const errors = (0, express_validator_1.validationResult)(req);
+    const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
         return next(new HttpError(errors.array()[0].msg, 400));
     }
@@ -160,7 +160,7 @@ const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         // const Attachment:any = createModel()
         const fileBuffer = req.file;
         if (fileBuffer !== undefined) {
-            path = `out/uploads/${fileBuffer.originalname}`;
+            path = `uploads/${fileBuffer.originalname}`;
             const stream = fs.createReadStream(path);
             const params = {
                 Bucket: 'bucket-filestorage',
@@ -226,7 +226,7 @@ const getGroupPosts = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 //FORKS
 const createFork = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const errors = (0, express_validator_1.validationResult)(req);
+    const errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {
         return next(new HttpError(errors.array()[0].msg, 400));
     }

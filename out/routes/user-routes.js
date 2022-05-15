@@ -12,8 +12,8 @@ router.use(checkAuth);
 router.get('/', userRouteController.createOrLoginUser);
 router.get('/:userId/quicknotes', userRouteController.getQuickNote);
 router.post('/:userId/quicknote', [
-    (0, express_validator_1.body)('title').isLength({ min: 3 }),
-    (0, express_validator_1.body)('description').isLength({ min: 5 })
+    express_validator_1.body('title').isLength({ min: 3 }),
+    express_validator_1.body('description').isLength({ min: 5 })
 ], userRouteController.addQuickNote);
 router.delete('/:userId/:qid', userRouteController.deleteQuickNote);
 module.exports = router;
