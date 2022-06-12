@@ -263,7 +263,7 @@ const createPost = async(req:Request,res:Response,next:Function)=>{
     }
     
 
-    res.status(201).json({postId:postId.toObject({getters:true}).id,link:postId.toObject({getters:true}).storage?.location??null})
+    res.status(201).json({postId:postId.toObject({getters:true}).id,postTitle,description,link:postId.toObject({getters:true}).storage?.location??null})
 
 }
 

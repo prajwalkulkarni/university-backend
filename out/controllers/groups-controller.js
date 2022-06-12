@@ -196,7 +196,7 @@ const createPost = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         console.log(error);
         next(new HttpError(error, 500));
     }
-    res.status(201).json({ postId: postId.toObject({ getters: true }).id, link: (_b = (_a = postId.toObject({ getters: true }).storage) === null || _a === void 0 ? void 0 : _a.location) !== null && _b !== void 0 ? _b : null });
+    res.status(201).json({ postId: postId.toObject({ getters: true }).id, postTitle, description, link: (_b = (_a = postId.toObject({ getters: true }).storage) === null || _a === void 0 ? void 0 : _a.location) !== null && _b !== void 0 ? _b : null });
 });
 const getGroupPosts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { groupId, userId } = req.params;

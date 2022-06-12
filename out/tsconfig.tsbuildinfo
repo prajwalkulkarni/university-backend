@@ -487,7 +487,7 @@
         "affectsGlobalScope": false
       },
       "../index.ts": {
-        "version": "29a26a08c564e4eed0f4caeac34e751ce8d0f90d85366b73c6490ad6f49d65c5",
+        "version": "5199c575daa8509be662f2643c8f82e5f7c5393356b07fd262bfc9c0a341fd57",
         "signature": "00316e779bb16e52d58ebe243051bc85fe123e66577a482f57c290a6f2e1a779",
         "affectsGlobalScope": false
       },
@@ -2397,7 +2397,7 @@
         "affectsGlobalScope": false
       },
       "../controllers/groups-controller.ts": {
-        "version": "84a1e078d9e6420609a0e2e3dab500d762697b4f114a10a5ba6e1ec65857f0bf",
+        "version": "328c0b2fa3e951293aa55874b67350b39c5376c57ddeb2d1b7a7cd3bb4807419",
         "signature": "79a8c7e0a55258c150c6391ed3a42f5dba57ded1add3c8f6aecddf1337856c8f",
         "affectsGlobalScope": false
       },

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node out/index.js"
+    "start": "ts-node-dev ./index.ts"
   },
   "author": "Prajwal Kulkarni",
   "license": "ISC",

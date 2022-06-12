@@ -1,4 +1,4 @@
-import {Request,response,Response} from 'express'
+import {Request,Response} from 'express'
 import { HttpErrorType } from './utils/types';
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
